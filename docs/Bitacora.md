@@ -26,13 +26,10 @@ Cuando acabes no olvides ayudarnos evaluando tu ⭐[experiencia](https://forms.o
 - [ ] No
 
 **Captura de pantalla de la aplicación funcionando:**
-
-![alt text](etapa1.png)
+![alt text](img/etapa1.png)
 
 dominio: https://carolina-cepeda-v-app.obs-stack.eci-idp.click/api/
- curl -X POST https://carolina-cepeda-v-app.obs-stack.eci-idp.click/api/ \
- -H "Content-Type: application/json" \
- -d '{"url": "https://google.com"}'
+
 
 ### 1.3. Observaciones y problemas encontrados (opcional)
 
@@ -58,48 +55,49 @@ dominio: https://carolina-cepeda-v-app.obs-stack.eci-idp.click/api/
 
 ### 2.0.2. Análisis de dos métricas relevantes
 
+dominio para métricas: https://carolina-cepeda-v-app.obs-stack.eci-idp.click/actuator/prometheus
+
 #### Métrica 1
 
 **Nombre de la métrica:**  
 ```
-
+jvm_info JVM version info
 ```
 
 **Tipo de métrica:** 
 - [ ] Counter
-- [ ] Gauge 
+- [X] Gauge 
 - [ ] Histogram 
 - [ ] Summary
 
 **Descripción de qué información aporta:**
 ```
-
+aporta información respecto a la versión de la máquina virtual de Java ( JVM)
 
 
 ```
 
 **Relación con otras métricas (si aplica):**
 ```
-Ejemplo: Un aumento en peticiones HTTP podría influir en el uso de CPU
-
 
 ```
 
 **¿En que escenarios puede ayudar esta métrica?**
 ```
-
+Esta métrica permite saber que versión de JVM se está usando , permitiendo evitar problemas de 
+compatibilidad con otras aplicaciones o herramientas
 
 
 ```
 
 **¿Qué etiquetas (labels) se utilizan para agrupar los datos?**
 ```
-Ejemplo: uri, method, status, instance, job, etc.
+Se usa runtime, vendor y version
 
 
 
 ```
-
+![alt text](img/etapa2p1.png)
 ---
 
 #### Métrica 2
@@ -111,40 +109,39 @@ Ejemplo: uri, method, status, instance, job, etc.
 
 **Tipo de métrica:** 
 - [ ] Counter
-- [ ] Gauge 
+- [X] Gauge 
 - [ ] Histogram 
 - [ ] Summary
 
 **Descripción de qué información aporta:**
 ```
-
+Explica el uso de la memoria en base al último evento del Garbage Collector 
 
 
 ```
 
 **Relación con otras métricas (si aplica):**
 ```
-Ejemplo: Un aumento en peticiones HTTP podría influir en el uso de CPU
+Un aumento en el uso de memoria desde el último evento, puede estar altamente relacionado con, por ejemplo, la lentitud a la hora de resolver solicitudes.
 
 
 ```
 
 **¿En que escenarios puede ayudar esta métrica?**
 ```
-
+Esta métrica ayuda a observar si es necesaria la optimización en términos de memoria, si es necesario usar otros administradores. 
 
 
 ```
 
 **¿Qué etiquetas (labels) se utilizan para agrupar los datos?**
 ```
-Ejemplo: uri, method, status, instance, job, etc.
-
-
+Se usan las labels area y pool
 
 ```
 
 ---
+![alt text](img/etapa2p2.png)
 
 ## Etapa 2.1: Dashboard Base en Grafana
 
@@ -152,8 +149,7 @@ Ejemplo: uri, method, status, instance, job, etc.
 ### 2.1.1. Evidencia: Dashboard Base en Grafana con los 4 paneles iniciales
 
 **Captura de pantalla del dashboard:**
-
-> _[Inserta aquí la imagen del dashboard con los 4 paneles]_
+![alt text](img/panels1.png)
 
 ### 2.1.2. Visualizaciónes Adicionales (Con las metricas actuales)
 
@@ -163,24 +159,25 @@ Ejemplo: uri, method, status, instance, job, etc.
 ```
 ¿Qué quieres analizar o mostrar? Menciona qué métrica(s) vas a usar
 
+Quiero analizar como se comporta la memoria con el pasar del tiempo enla ultima hora en la aplicación,voy a usar la métrica de memoria utilizada en bytes.
 
 ```
 
-**Título del panel:**
+**Título del panel:** 
 ```
-
+Memoria utilizada en bytes
 ```
 
 **Consulta (PromQL o LogQL):**
 ```
-Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la consulta que se muestra en la caja de texto de la seccion Code.
+rate(jvm_memory_used_bytes{applicationName="carolina-cepeda-v-app-monitoring"}[1h])
 
 ```
 
 **Tipo de visualización:** 
 - [ ] Time series
 - [ ] Gauge
-- [ ] Bar chart
+- [X] Bar chart
 - [ ] Stat
 - [ ] Logs
 - [ ] Otro: _____
@@ -192,12 +189,11 @@ Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la 
 ```
 
 **Captura de pantalla:**
-
-> _[Inserta aquí la imagen del panel]_
+![alt text](img/panelmemoria.png)
 
 **Análisis (2-3 frases):**
 ```
-¿Qué conclusiones o patrones observas?
+Se observa que hay un diferente uso de la memoria dependiendo del área. Por ejemplo, el Heap G1 space es el que más usa memoria, en comparación a otros como G1 Old Gen que solo utiliza, en promedio, 271 bytes.
 
 
 
@@ -209,24 +205,24 @@ Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la 
 
 **Propósito:**
 ```
-¿Qué quieres analizar o mostrar? Menciona qué métrica(s) vas a mostrar
+Quiero analizar el tiempo de carga de la aplicación, para observar si sus componentes están
+presentando problemas o insatisfacciones en los clientes.
 
 
 ```
 
 **Título del panel:**
 ```
-
+Tiempo promedio sistema carga
 ```
 
 **Consulta (PromQL o LogQL):**
 ```
-Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la consulta que se muestra en la caja de texto de la seccion Code.
-
+rate(system_load_average_1m{applicationName="carolina-cepeda-v-app-monitoring"}[$__rate_interval])
 ```
 
 **Tipo de visualización:** 
-- [ ] Time series
+- [X] Time series
 - [ ] Gauge
 - [ ] Bar chart
 - [ ] Stat
@@ -241,11 +237,11 @@ Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la 
 
 **Captura de pantalla:**
 
-> _[Inserta aquí la imagen del panel]_
+![alt text](img/panelCarga.png)
 
 **Análisis (2-3 frases):**
 ```
-¿Qué conclusiones o patrones observas?
+Se observan picos a la hora de ver el promedio de tiempo de carga de la aplicación, a pesar de que no son de gran tamaño generan curiosidad para saber cuáles son los recursos que están tomando ese tiempo.
 
 
 
@@ -257,7 +253,7 @@ Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la 
 
 **¿Qué otros datos te gustaría visualizar si tuvieras más información disponible?**
 ```
-
+Me gustaría ver cuanta memoria toma cada tipo de solicitud en promedio
 
 
 ```

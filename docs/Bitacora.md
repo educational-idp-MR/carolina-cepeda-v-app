@@ -1,6 +1,6 @@
 # Bitácora Experimento - Observabilidad y Monitoreo
 
-**Nombre del estudiante:** _____________________________  
+**Nombre del estudiante:** Carolina Cepeda Valencia
 ---
 Cuando acabes no olvides ayudarnos evaluando tu ⭐[experiencia](https://forms.office.com/r/JCyhCpujrt)⭐
 ---
@@ -22,12 +22,17 @@ Cuando acabes no olvides ayudarnos evaluando tu ⭐[experiencia](https://forms.o
 
 **¿La aplicación se desplegó correctamente?** 
 
-- [ ] Sí
+- [X ] Sí
 - [ ] No
 
 **Captura de pantalla de la aplicación funcionando:**
 
-> _[Inserta aquí la imagen de la aplicación corriendo en /api/]_
+![alt text](etapa1.png)
+
+dominio: https://carolina-cepeda-v-app.obs-stack.eci-idp.click/api/
+ curl -X POST https://carolina-cepeda-v-app.obs-stack.eci-idp.click/api/ \
+ -H "Content-Type: application/json" \
+ -d '{"url": "https://google.com"}'
 
 ### 1.3. Observaciones y problemas encontrados (opcional)
 

@@ -40,12 +40,41 @@ public class UrlShortenerService {
         }
         logger.debug("Simulated latency: {} ms", delay);
     }
+    private void simulateLoad() {
+      
+        shortenUrl("https://example.com", null);
+        shortenUrl("jsdajjas", null);
+        shortenUrl("https://ferrari.com", null);
+        shortenUrl("https://mercedes.com", null);
+        shortenUrl("https://example.com", null);
+        shortenUrl("jsdajjas", null);
+        shortenUrl("https://ferrari.com", null);
+        shortenUrl("https://mercedes.com", null);
+        shortenUrl("https://example.com", null);
+        shortenUrl("jsdajjas", null);
+        shortenUrl("https://ferrari.com", null);
+        shortenUrl("https://mercedes.com", null);
+        shortenUrl("https://example.com", null);
+        shortenUrl("jsdajjas", null);
+        shortenUrl("https://ferrari.com", null);
+        shortenUrl("https://mercedes.com", null);
+        shortenUrl("https://example.com", null);
+        shortenUrl("jsdajjas", null);
+        shortenUrl("https://ferrari.com", null);
+        shortenUrl("https://mercedes.com", null);
+        shortenUrl("https://example.com", null);
+        shortenUrl("jsdajjas", null);
+        shortenUrl("https://ferrari.com", null);
+        shortenUrl("https://mercedes.com", null);
+        logger.debug("Simulated Load ");
+    }
 
     /**
      * Acorta una URL y retorna el código corto
      */
     public UrlMapping shortenUrl(String originalUrl, String customCode) {
         simulateLatency();
+        simulateLoad();
         String shortCode;
         if (customCode != null && !customCode.isEmpty()) {
             if (urlStorage.containsKey(customCode)) {

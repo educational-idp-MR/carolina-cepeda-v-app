@@ -1,0 +1,20 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "carolina-cepeda-v-app"
+  description: This is a Java Spring boot app with prometheus and loki integration
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    backstage.io/kubernetes-label-selector: 'entity-id=carolina-cepeda-v-app'
+    backstage.io/kubernetes-namespace: carolina-cepeda-v-app-monitoring
+    argocd/app-name: "carolina-cepeda-v-app"
+  links:
+    - url: https://carolina-cepeda-v-app.obs-stack.eci-idp.click/api/
+      title: Url Shortener App 
+      icon: externalLink
+spec:
+  owner: students
+  lifecycle: experimental
+  type: service
+  system: "system:default/obs-stack"
